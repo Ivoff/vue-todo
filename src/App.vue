@@ -1,28 +1,50 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+    <div id="app">
+        <Todos v-bind:todos="todos"
+               v-on:delete-item="deleteItem"
+               v-on:update-item="updateItem"
+        />
+    </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
 
-export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+    import Todos from "./components/Todos";
+
+    export default {
+        name: 'App',
+        components: {
+            Todos
+        },
+        data() {
+            return {
+                todos: []
+            }
+        },
+        methods: {
+            deleteItem(id) {
+                this.todos = this.todos.filter(element => element.id !== id);
+            },
+            updateItem(todo) {
+                this.todos.forEach((element, index) => {
+                    if (element.id === todo.id) {
+                        this.todos[index] = todo;
+                    }
+                });
+            }
+        }
+    }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+    #app {
+        background-color: black;
+        color: white;
+        font-family: Avenir, Helvetica, Arial, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        text-align: center;
+        padding-bottom: 100px;
+        padding-top: 100px;
+    }
 </style>
